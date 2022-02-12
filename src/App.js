@@ -1,4 +1,11 @@
+import FusionCharts from 'fusioncharts';
 import SampleChart from './components/SampleChart';
+
+// Register FusionCharts with license key from environment variable
+FusionCharts.options.license({
+  key: process.env.REACT_APP_FC_KEY,
+  creditLabel: false,
+});
 
 function App() {
   return (
