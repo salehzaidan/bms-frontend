@@ -1,5 +1,5 @@
 import FusionCharts from 'fusioncharts';
-import SampleChart from './components/SampleChart';
+import BatteryGauge from './components/BatteryGauge';
 
 // Register FusionCharts with license key from environment variable
 FusionCharts.options.license({
@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
       <h1>Battery Management System</h1>
-      <SampleChart />
+      <BatteryGauge />
     </div>
   );
 }
