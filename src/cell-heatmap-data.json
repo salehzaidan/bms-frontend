@@ -1,0 +1,22 @@
+[
+  { "cellId": 1, "voltage": 3.57, "temperature": 26.4, "soc": 44.01 },
+  { "cellId": 2, "voltage": 3.35, "temperature": 25.4, "soc": 20.22 },
+  { "cellId": 3, "voltage": 3.39, "temperature": 25.5, "soc": 24.39 },
+  { "cellId": 4, "voltage": 0.0, "temperature": 0.0, "soc": 1.57 },
+  { "cellId": 5, "voltage": 3.39, "temperature": 24.87, "soc": 24.39 },
+  { "cellId": 6, "voltage": 2.49, "temperature": 24.28, "soc": 1.88 },
+  { "cellId": 7, "voltage": 3.39, "temperature": 25.31, "soc": 24.39 },
+  { "cellId": 8, "voltage": 3.46, "temperature": 25.71, "soc": 32.02 },
+  { "cellId": 9, "voltage": 3.43, "temperature": 24.5, "soc": 28.75 },
+  { "cellId": 10, "voltage": 4.38, "temperature": 26.09, "soc": 100.0 },
+  { "cellId": 11, "voltage": 3.49, "temperature": 24.71, "soc": 35.29 },
+  { "cellId": 12, "voltage": 3.49, "temperature": 25.06, "soc": 35.29 },
+  { "cellId": 13, "voltage": 0.0, "temperature": 0.0, "soc": 1.57 },
+  { "cellId": 14, "voltage": 3.49, "temperature": 24.9, "soc": 35.29 },
+  { "cellId": 15, "voltage": 3.51, "temperature": 24.9, "soc": 37.47 },
+  { "cellId": 16, "voltage": 3.58, "temperature": 24.62, "soc": 45.1 },
+  { "cellId": 17, "voltage": 0.0, "temperature": 25.18, "soc": 1.57 },
+  { "cellId": 18, "voltage": 3.51, "temperature": 24.96, "soc": 37.47 },
+  { "cellId": 19, "voltage": 3.53, "temperature": 26.15, "soc": 39.65 },
+  { "cellId": 20, "voltage": 3.64, "temperature": 26.46, "soc": 51.64 }
+]
