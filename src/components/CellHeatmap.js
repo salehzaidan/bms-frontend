@@ -6,6 +6,7 @@ import ReactFC from 'react-fusioncharts';
 import useInterval from '../hooks/useInterval';
 import sampleData from '../cell-heatmap-data.json';
 import { getRandomNumber } from '../lib/utils';
+import ReactDOMServer from 'react-dom/server';
 
 ReactFC.fcRoot(FusionCharts, Powercharts, FusionTheme);
 
@@ -16,8 +17,17 @@ const dataSource = {
     showYaxisLabels: false,
     showXaxisLabels: false,
     decimal: 2,
-    plottooltext:
-      '<div><b>$tlLabel</b><br/>Voltage: $displayValue <br/>Temperature: $trLabel <br/>SoC: $brLabel</div>',
+    plottooltext: ReactDOMServer.renderToStaticMarkup(
+      <div>
+        <b>$tlLabel</b>
+        <br />
+        Voltage: $displayValue
+        <br />
+        Temperature: $trLabel
+        <br />
+        SoC: $brLabel
+      </div>
+    ),
   },
   rows: {
     row: [
