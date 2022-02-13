@@ -59,7 +59,7 @@ function getRowColId(cellId) {
 function parseDataset(data) {
   return [
     {
-      data: data.map((item) => {
+      data: data.map(item => {
         const { rowId, columnId } = getRowColId(item.cellId);
         return {
           rowId,
@@ -79,14 +79,14 @@ function CellHeatmap({ className }) {
   const [dataset, setDataset] = useState(parseDataset(sampleData));
   const delay = 1000;
 
-  const updateData = useCallback((data) => {
+  const updateData = useCallback(data => {
     setDataset(parseDataset(data));
   }, []);
 
   useInterval(
     () =>
       updateData(
-        sampleData.map((data) => ({
+        sampleData.map(data => ({
           ...data,
           voltage: getRandomNumber(0, 4.5),
           temperature: getRandomNumber(0, 27.0),
