@@ -1,12 +1,13 @@
 import FusionCharts from 'fusioncharts';
 import Powercharts from 'fusioncharts/fusioncharts.powercharts';
 import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import ReactFC from 'react-fusioncharts';
 import useInterval from '../hooks/useInterval';
 import sampleData from '../cell-heatmap-data.json';
 import { getRandomNumber } from '../lib/utils';
 import ReactDOMServer from 'react-dom/server';
+import { AppContext } from '../App';
 
 ReactFC.fcRoot(FusionCharts, Powercharts, FusionTheme);
 
@@ -87,11 +88,16 @@ function parseDataset(data) {
 
 function CellHeatmap({ className }) {
   const [dataset, setDataset] = useState(parseDataset(sampleData));
+  const { dispatch } = useContext(AppContext);
   const delay = 1000;
 
-  const updateData = useCallback(data => {
-    setDataset(parseDataset(data));
-  }, []);
+  const updateData = useCallback(
+    data => {
+      setDataset(parseDataset(data));
+      dispatch({ type: 'update', payload: data });
+    },
+    [dispatch]
+  );
 
   useInterval(
     () =>
