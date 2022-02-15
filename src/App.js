@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import BatteryGauge from './components/BatteryGauge';
+import Card from './components/Card';
 import DataInfo from './components/DataInfo';
 import DataItem from './components/DataItem';
 import useInterval from './hooks/useInterval';
@@ -13,22 +14,22 @@ function App() {
   useInterval(() => setData(randomizeData(sampleData)), delay);
 
   return (
-    <>
-      <header className="p-4">
-        <h1 className="text-center text-2xl font-semibold text-cyan-600">
-          Battery Management System
-        </h1>
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      <header className="bg-teal-100 p-4">
+        <h1 className="text-center text-2xl">Battery Management System</h1>
       </header>
-      <main className="mx-auto grid max-w-screen-md grid-cols-2 items-center justify-items-center px-4">
-        <BatteryGauge value={data.general[0].min_soc} />
-
-        <DataItem
-          className="row-start-2"
-          label="Total Voltage"
-          value={data.general[0].total_voltage}
-          unit="V"
-          insertSpace
-        />
+      <main className="mx-auto mt-8 grid max-w-screen-md grid-cols-2 items-center justify-items-center px-4">
+        <Card title="Battery Status">
+          <BatteryGauge value={data.general[0].avg_soc} />
+          <DataItem
+            className="row-start-2"
+            label="Total Voltage"
+            value={data.general[0].total_voltage}
+            unit="V"
+            insertSpace
+            variant="horizontal"
+          />
+        </Card>
 
         <div className="row-span-2 grid grid-rows-3 gap-4">
           <DataInfo
@@ -55,7 +56,7 @@ function App() {
           />
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
