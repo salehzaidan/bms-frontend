@@ -32,7 +32,7 @@ function App() {
           />
         </Card>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-rows-3 gap-6 sm:grid-cols-3 sm:grid-rows-none">
           <DataInfo
             label="Voltage"
             min={data.general[0].min_voltage}

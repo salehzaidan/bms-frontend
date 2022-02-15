@@ -19,7 +19,7 @@ function DataInfo({ label, min, average, max, unit, insertSpace }) {
   return (
     <Card title={label}>
       <Icon icon={getIcon()} className="h-16 w-16 text-teal-500" />
-      <div className="mt-1 grid grid-rows-3 gap-4">
+      <div className="mt-1 grid grid-cols-3 gap-4 sm:grid-cols-none sm:grid-rows-3">
         <DataItem
           label="Min"
           value={min}

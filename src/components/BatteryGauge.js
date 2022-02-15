@@ -19,7 +19,7 @@ function BatteryGauge({ value }) {
   return (
     <div aria-hidden className="mx-4">
       {/* Background fill */}
-      <div className={classNames(bgFill, 'relative h-20 w-72')}>
+      <div className={classNames(bgFill, 'relative h-20 w-52 lg:w-72')}>
         {/* Foreground fill */}
         <div
           style={{ width: `${value}%` }}
@@ -30,13 +30,13 @@ function BatteryGauge({ value }) {
         <div
           className={classNames(
             bgFill,
-            'absolute inset-y-1/2 left-72 h-8 w-2.5 -translate-y-1/2 rounded-tr-md rounded-br-md'
+            'absolute inset-y-1/2 left-52 h-8 w-2.5 -translate-y-1/2 rounded-tr-md rounded-br-md lg:left-72'
           )}
         />
       </div>
 
       {/* Axis */}
-      <div className="mt-1 grid w-72 cursor-default grid-cols-4 border-t-[1.5px] border-gray-400 text-sm">
+      <div className="mt-1 grid w-52 cursor-default grid-cols-4 border-t-[1.5px] border-gray-400 text-sm lg:w-72">
         <div className="h-1.5 border-l-[1.5px] border-gray-400"></div>
         <div className="h-1.5 border-l-[1.5px] border-gray-400"></div>
         <div className="h-1.5 border-l-[1.5px] border-gray-400"></div>
