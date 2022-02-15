@@ -8,7 +8,9 @@ function DataItem({
   return (
     <div className={`text-center ${className}`}>
       <h3 className="text-xs font-bold uppercase text-cyan-800">{label}</h3>
-      <p className="text-sm">{value + (insertSpace ? ' ' : '') + unit}</p>
+      <p className="text-sm">
+        {value.toFixed(2) + (insertSpace ? ' ' : '') + unit}
+      </p>
     </div>
   );
 }

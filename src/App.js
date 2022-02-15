@@ -1,71 +1,31 @@
-import FusionCharts from 'fusioncharts';
-import { createContext, useReducer } from 'react';
+import { useState } from 'react';
 import BatteryGauge from './components/BatteryGauge';
-import CellHeatmap from './components/CellHeatmap';
 import DataInfo from './components/DataInfo';
 import DataItem from './components/DataItem';
-import { average, sum } from './lib/utils';
-
-// Register FusionCharts with license key from environment variable
-FusionCharts.options.license({
-  key: process.env.REACT_APP_FC_KEY,
-  creditLabel: false,
-});
-
-const initialStats = {
-  voltage: { min: 0.0, average: 0.0, max: 0.0, total: 0.0 },
-  temperature: { min: 0.0, average: 0.0, max: 0.0 },
-  soc: { min: 0.0, average: 0.0, max: 0.0 },
-};
-
-function reducer(stats, action) {
-  switch (action.type) {
-    case 'update':
-      const voltages = action.payload.map(item => item.voltage);
-      const temperatures = action.payload.map(item => item.temperature);
-      const socs = action.payload.map(item => item.soc);
-
-      return {
-        voltage: {
-          min: Math.min(...voltages),
-          average: average(voltages),
-          max: Math.max(...voltages),
-          total: sum(voltages),
-        },
-        temperature: {
-          min: Math.min(...temperatures),
-          average: average(temperatures),
-          max: Math.max(...temperatures),
-        },
-        soc: {
-          min: Math.min(...socs),
-          average: average(socs),
-          max: Math.max(...socs),
-        },
-      };
-    default:
-      throw new Error();
-  }
-}
-
-export const AppContext = createContext(null);
+import useInterval from './hooks/useInterval';
+import { randomizeData } from './lib/utils';
+import sampleData from './sample-data.json';
 
 function App() {
-  const [stats, dispatch] = useReducer(reducer, initialStats);
+  const [data, setData] = useState(sampleData);
+  const delay = 1000;
+
+  useInterval(() => setData(randomizeData(sampleData)), delay);
+
   return (
-    <AppContext.Provider value={{ stats, dispatch }}>
+    <>
       <header className="p-4">
         <h1 className="text-center text-2xl font-semibold text-cyan-600">
           Battery Management System
         </h1>
       </header>
       <main className="mx-auto grid max-w-screen-md grid-cols-2 items-center justify-items-center px-4">
-        <BatteryGauge />
+        <BatteryGauge value={data.general[0].min_soc} />
 
         <DataItem
           className="row-start-2"
           label="Total Voltage"
-          value={stats.voltage.total}
+          value={data.general[0].total_voltage}
           unit="V"
           insertSpace
         />
@@ -73,31 +33,29 @@ function App() {
         <div className="row-span-2 grid grid-rows-3 gap-4">
           <DataInfo
             label="Voltage"
-            min={stats.voltage.min}
-            average={stats.voltage.average}
-            max={stats.voltage.max}
+            min={data.general[0].min_voltage}
+            average={data.general[0].avg_voltage}
+            max={data.general[0].max_voltage}
             unit="V"
             insertSpace
           />
           <DataInfo
             label="Temperature"
-            min={stats.temperature.min}
-            average={stats.temperature.average}
-            max={stats.temperature.max}
+            min={data.general[0].min_temperature}
+            average={data.general[0].avg_temperature}
+            max={data.general[0].max_temperature}
             unit="&deg;C"
           />
           <DataInfo
             label="SoC"
-            min={stats.soc.min}
-            average={stats.soc.average}
-            max={stats.soc.max}
+            min={data.general[0].min_soc}
+            average={data.general[0].avg_soc}
+            max={data.general[0].max_soc}
             unit="%"
           />
         </div>
-
-        <CellHeatmap className="col-span-2 mt-4" />
       </main>
-    </AppContext.Provider>
+    </>
   );
 }
 

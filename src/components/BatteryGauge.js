@@ -1,81 +1,56 @@
-import FusionCharts from 'fusioncharts';
-import Widgets from 'fusioncharts/fusioncharts.widgets';
-import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
-import { useState } from 'react';
-import ReactFC from 'react-fusioncharts';
-import useInterval from '../hooks/useInterval';
-import { getRandomNumber } from '../lib/utils';
+import { useCallback } from 'react';
+import { classNames } from '../lib/utils';
 
-ReactFC.fcRoot(FusionCharts, Widgets, FusionTheme);
+function BatteryGauge({ value }) {
+  const getFill = useCallback(() => {
+    if (value >= 0 && value < 45) {
+      return ['bg-battery-low', 'bg-red-900'];
+    }
+    if (value >= 45 && value < 75) {
+      return ['bg-battery-medium', 'bg-yellow-900'];
+    }
+    if (value >= 75 && value <= 100) {
+      return ['bg-battery-high', 'bg-green-900'];
+    }
+  }, [value]);
 
-const dataSource = {
-  chart: {
-    theme: 'fusion',
-    lowerLimit: 0,
-    upperLimit: 100,
-    lowerLimitDisplay: 'Empty',
-    upperLimitDisplay: 'Full',
-    numberSuffix: '%',
-    useSameFillColor: true,
-    useSameFillBgColor: true,
-    showValue: false,
-    chartBottomMargin: 0,
-  },
-  annotations: {
-    showbelow: 1,
-    groups: [
-      {
-        id: 'indicator',
-        items: [
-          {
-            id: 'bgRectangle',
-            type: 'rectangle',
-            radius: 5,
-            fillColor: '#333333',
-            x: '$gaugeEndX - 10',
-            toX: '$gaugeEndX + 12',
-            y: '$gaugeCenterY - 20',
-            toY: '$gaugeCenterY + 20',
-          },
-        ],
-      },
-    ],
-  },
-  colorRange: {
-    color: [
-      {
-        minValue: 0,
-        maxValue: 45,
-        code: '#e44a00',
-      },
-      {
-        minValue: 45,
-        maxValue: 75,
-        code: '#f8bd19',
-      },
-      {
-        minValue: 75,
-        maxValue: 100,
-        code: '#6baa01',
-      },
-    ],
-  },
-};
-
-function BatteryGauge() {
-  const [value, setValue] = useState(0);
-  const delay = 1000;
-
-  useInterval(() => setValue(getRandomNumber(0, 100)), delay);
+  const [fgFill, bgFill] = getFill();
 
   return (
-    <ReactFC
-      type="hled"
-      width={336}
-      height={112}
-      dataFormat="json"
-      dataSource={{ ...dataSource, value }}
-    />
+    <div aria-hidden className="mx-4">
+      {/* Background fill */}
+      <div className={classNames(bgFill, 'relative h-20 w-72')}>
+        {/* Foreground fill */}
+        <div
+          style={{ width: `${value}%` }}
+          className={classNames(fgFill, 'h-full')}
+        />
+
+        {/* Battery cap */}
+        <div
+          className={classNames(
+            bgFill,
+            'absolute inset-y-1/2 left-72 h-8 w-2.5 -translate-y-1/2 rounded-tr-md rounded-br-md'
+          )}
+        />
+      </div>
+
+      {/* Axis */}
+      <div className="mt-1 grid w-72 cursor-default grid-cols-4 border-t-[1.5px] border-gray-400 text-sm">
+        <div className="h-1.5 border-l-[1.5px] border-gray-400"></div>
+        <div className="h-1.5 border-l-[1.5px] border-gray-400"></div>
+        <div className="h-1.5 border-l-[1.5px] border-gray-400"></div>
+        <div className="h-1.5 border-x-[1.5px] border-gray-400"></div>
+      </div>
+
+      <div className="relative flex h-4 cursor-default select-none text-sm">
+        <div className="absolute left-0 -translate-x-1/2">0%</div>
+        <div className="absolute left-1/4 -translate-x-1/2">25%</div>
+        <div className="absolute left-1/2 -translate-x-1/2">50%</div>
+        <div className="absolute left-3/4 -translate-x-1/2">75%</div>
+        <div className="absolute left-full -translate-x-1/2">100%</div>
+      </div>
+    </div>
   );
 }
 
