@@ -9,6 +9,9 @@ module.exports = {
           high: '#6baa01',
         },
       },
+      fontFamily: {
+        sans: ['InterVariable', 'sans-serif'],
+      },
     },
   },
   plugins: [],

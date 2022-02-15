@@ -1,3 +1,4 @@
+import '@fontsource/inter/variable.css';
 import { useState } from 'react';
 import BatteryGauge from './components/BatteryGauge';
 import Card from './components/Card';
