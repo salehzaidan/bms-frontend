@@ -11,8 +11,8 @@ function DataItem({
   return (
     <div
       className={classNames(
-        variant === 'vertical' ? 'flex-col' : 'flex-row',
-        'flex items-center gap-4 text-center',
+        variant === 'vertical' ? 'flex-col gap-1' : 'flex-row gap-4',
+        'flex items-center text-center',
         className
       )}
     >
@@ -25,7 +25,7 @@ function DataItem({
         {label}
       </h3>
       <p
-        className={classNames(variant === 'vertical' ? 'text-sm' : 'text-2xl')}
+        className={classNames(variant === 'vertical' ? 'text-lg' : 'text-2xl')}
       >
         {value.toFixed(2) + (insertSpace ? ' ' : '') + unit}
       </p>

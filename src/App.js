@@ -19,7 +19,7 @@ function App() {
       <header className="bg-teal-100 p-4">
         <h1 className="text-center text-2xl">Battery Management System</h1>
       </header>
-      <main className="mx-auto mt-8 grid max-w-screen-md grid-cols-2 items-center justify-items-center px-4">
+      <main className="mx-auto mt-8 grid max-w-screen-sm grid-cols-1 gap-6 px-4 lg:max-w-screen-lg lg:grid-cols-2">
         <Card title="Battery Status">
           <BatteryGauge value={data.general[0].avg_soc} />
           <DataItem
@@ -32,7 +32,7 @@ function App() {
           />
         </Card>
 
-        <div className="row-span-2 grid grid-rows-3 gap-4">
+        <div className="grid grid-cols-3 gap-6">
           <DataInfo
             label="Voltage"
             min={data.general[0].min_voltage}
