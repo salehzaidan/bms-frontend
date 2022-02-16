@@ -1,26 +1,12 @@
+import { getBatteryFill } from 'lib/battery';
 import { classNames, Props } from 'lib/utils';
-import { useCallback } from 'react';
 
 interface BatteryGaugeProps extends Props {
   value: number;
 }
 
 function BatteryGauge({ value }: BatteryGaugeProps) {
-  const getFill = useCallback<() => [string, string]>(() => {
-    if (value >= 0 && value < 45) {
-      return ['bg-battery-low', 'bg-red-900'];
-    }
-    if (value >= 45 && value < 75) {
-      return ['bg-battery-medium', 'bg-yellow-900'];
-    }
-    if (value >= 75 && value <= 100) {
-      return ['bg-battery-high', 'bg-green-900'];
-    }
-    throw Error("Props 'value' out of bounds");
-  }, [value]);
-
-  const [fgFill, bgFill] = getFill();
-
+  const [fgFill, bgFill] = getBatteryFill(value);
   return (
     <div aria-hidden className="mx-4">
       {/* Background fill */}
