@@ -6,7 +6,7 @@ import DataInfo from 'components/DataInfo';
 import DataItem from 'components/DataItem';
 import useInterval from 'hooks/useInterval';
 import { Data, Variable } from 'lib/battery';
-import { randomizeData } from 'lib/utils';
+// import { randomizeData } from 'lib/utils';
 import { createContext, useState } from 'react';
 import sampleData from 'sample-data.json';
 
@@ -16,7 +16,16 @@ function App() {
   const [data, setData] = useState<Data>(sampleData);
   const delay = 1000;
 
-  useInterval(() => setData(randomizeData(sampleData)), delay);
+  useInterval(async () => {
+    const response = await fetch(process.env.REACT_APP_DATA_PROVIDER!, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const newData: Data = await response.json();
+    setData(newData);
+  }, delay);
 
   return (
     <AppCtx.Provider value={data}>
