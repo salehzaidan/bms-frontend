@@ -1,8 +1,12 @@
+import { classNames, Props } from 'lib/utils';
 import { useCallback } from 'react';
-import { classNames } from '../lib/utils';
 
-function BatteryGauge({ value }) {
-  const getFill = useCallback(() => {
+interface BatteryGaugeProps extends Props {
+  value: number;
+}
+
+function BatteryGauge({ value }: BatteryGaugeProps) {
+  const getFill = useCallback<() => [string, string]>(() => {
     if (value >= 0 && value < 45) {
       return ['bg-battery-low', 'bg-red-900'];
     }
@@ -12,6 +16,7 @@ function BatteryGauge({ value }) {
     if (value >= 75 && value <= 100) {
       return ['bg-battery-high', 'bg-green-900'];
     }
+    throw Error("Props 'value' out of bounds");
   }, [value]);
 
   const [fgFill, bgFill] = getFill();

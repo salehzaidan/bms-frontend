@@ -1,15 +1,16 @@
 import '@fontsource/inter/variable.css';
+import BatteryGauge from 'components/BatteryGauge';
+import Card from 'components/Card';
+import DataInfo from 'components/DataInfo';
+import DataItem from 'components/DataItem';
+import useInterval from 'hooks/useInterval';
+import { Data, Variable } from 'lib/battery';
+import { randomizeData } from 'lib/utils';
 import { useState } from 'react';
-import BatteryGauge from './components/BatteryGauge';
-import Card from './components/Card';
-import DataInfo from './components/DataInfo';
-import DataItem from './components/DataItem';
-import useInterval from './hooks/useInterval';
-import { randomizeData } from './lib/utils';
-import sampleData from './sample-data.json';
+import sampleData from 'sample-data.json';
 
 function App() {
-  const [data, setData] = useState(sampleData);
+  const [data, setData] = useState<Data>(sampleData);
   const delay = 1000;
 
   useInterval(() => setData(randomizeData(sampleData)), delay);
@@ -25,35 +26,30 @@ function App() {
           <DataItem
             className="row-start-2"
             label="Total Voltage"
+            variable={Variable.VOLTAGE}
             value={data.general[0].total_voltage}
-            unit="V"
-            insertSpace
             variant="horizontal"
           />
         </Card>
 
         <div className="grid grid-rows-3 gap-6 sm:grid-cols-3 sm:grid-rows-none">
           <DataInfo
-            label="Voltage"
+            variable={Variable.VOLTAGE}
             min={data.general[0].min_voltage}
             average={data.general[0].avg_voltage}
             max={data.general[0].max_voltage}
-            unit="V"
-            insertSpace
           />
           <DataInfo
-            label="Temperature"
+            variable={Variable.TEMPERATURE}
             min={data.general[0].min_temperature}
             average={data.general[0].avg_temperature}
             max={data.general[0].max_temperature}
-            unit="&deg;C"
           />
           <DataInfo
-            label="SoC"
+            variable={Variable.SOC}
             min={data.general[0].min_soc}
             average={data.general[0].avg_soc}
             max={data.general[0].max_soc}
-            unit="%"
           />
         </div>
       </main>

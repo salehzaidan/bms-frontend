@@ -1,23 +1,33 @@
-export function round(num, fractionDigits = 2) {
+import React from 'react';
+import { Data } from './battery';
+
+export interface Props {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export function round(num: number, fractionDigits: number = 2) {
   const factor = Math.pow(10, fractionDigits);
   return Math.round(num * factor) / factor;
 }
 
-export function getRandomNumber(min, max, fractionDigits = 2) {
+export function getRandomNumber(
+  min: number,
+  max: number,
+  fractionDigits: number = 2
+) {
   const num = (max - min) * Math.random() + min;
   return round(num, fractionDigits);
 }
 
-export function randomizeData(data) {
+export function randomizeData(data: Data): Data {
   return {
-    value: [
-      data.value.map(item => ({
-        voltage: getRandomNumber(0, 4.5),
-        temperature: getRandomNumber(0, 27.0),
-        soc: getRandomNumber(0, 100.0),
-        ...item,
-      })),
-    ],
+    value: data.value.map(item => ({
+      ...item,
+      voltage: getRandomNumber(0, 4.5),
+      temperature: getRandomNumber(0, 27.0),
+      soc: getRandomNumber(0, 100.0),
+    })),
     general: [
       {
         ...data.general[0],
@@ -36,6 +46,6 @@ export function randomizeData(data) {
   };
 }
 
-export function classNames(...classes) {
+export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }

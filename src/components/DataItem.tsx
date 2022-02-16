@@ -1,13 +1,21 @@
-import { classNames } from '../lib/utils';
+import { decode } from 'html-entities';
+import { Variable } from 'lib/battery';
+import { classNames, Props } from 'lib/utils';
+
+interface DataItemProps extends Props {
+  label: string;
+  variable: Variable;
+  value: number;
+  variant?: 'vertical' | 'horizontal';
+}
 
 function DataItem({
   className = '',
   label,
+  variable,
   value,
-  unit = null,
-  insertSpace = false,
   variant = 'vertical',
-}) {
+}: DataItemProps) {
   return (
     <div
       className={classNames(
@@ -27,7 +35,7 @@ function DataItem({
       <p
         className={classNames(variant === 'vertical' ? 'text-lg' : 'text-2xl')}
       >
-        {value.toFixed(2) + (insertSpace ? ' ' : '') + unit}
+        {value.toFixed(2) + (variable.space ? ' ' : '') + decode(variable.unit)}
       </p>
     </div>
   );
