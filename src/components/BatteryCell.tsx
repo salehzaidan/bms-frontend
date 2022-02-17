@@ -1,8 +1,44 @@
+import { Icon } from '@iconify/react';
+import { decode } from 'html-entities';
 import { getBatteryFill, Value, Variable } from 'lib/battery';
-import { classNames } from 'lib/utils';
-import ValueBar from './ValueBar';
+import { classNames, Props } from 'lib/utils';
+import { useCallback } from 'react';
 
-interface BatteryCellProps {
+interface BatteryCellValueProps extends Props {
+  variable: Variable;
+  value: Value;
+}
+
+function BatteryCellValue({ variable, value }: BatteryCellValueProps) {
+  const getValue = useCallback(() => {
+    switch (variable) {
+      case Variable.VOLTAGE:
+        return value.voltage;
+
+      case Variable.TEMPERATURE:
+        return value.temperature;
+
+      case Variable.SOC:
+        return value.soc;
+
+      default:
+        throw Error('Variable not recognized');
+    }
+  }, [variable, value]);
+
+  return (
+    <div className="flex items-center justify-between">
+      <Icon icon={variable.icon} className="h-5 w-5 shrink-0 text-teal-600" />
+      <div className="text-sm">
+        {getValue().toFixed(2) +
+          (variable.space ? ' ' : '') +
+          decode(variable.unit)}
+      </div>
+    </div>
+  );
+}
+
+interface BatteryCellProps extends Props {
   value: Value;
 }
 
@@ -34,8 +70,9 @@ function BatteryCell({ value }: BatteryCellProps) {
 
       {/* Stats */}
       <div className="mt-2 space-y-1">
-        <ValueBar variable={Variable.VOLTAGE} value={value} />
-        <ValueBar variable={Variable.TEMPERATURE} value={value} />
+        <BatteryCellValue variable={Variable.VOLTAGE} {...{ value }} />
+        <BatteryCellValue variable={Variable.TEMPERATURE} {...{ value }} />
+        <BatteryCellValue variable={Variable.SOC} {...{ value }} />
       </div>
     </div>
   );
