@@ -3,6 +3,8 @@ import Tab from 'components/Tab';
 import { Data } from 'lib/battery';
 import { fetchRealtime } from 'lib/utils';
 import { useQuery } from 'react-query';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Historical from 'routes/Historical';
 import Realtime from 'routes/Realtime';
 
 function App() {
@@ -24,7 +26,12 @@ function App() {
           </header>
           <main className="mx-auto max-w-screen-sm space-y-4 px-4 lg:max-w-screen-lg">
             <Tab timestamp={data.timestamp} />
-            <Realtime data={data} />
+            <Routes>
+              <Route path="realtime" element={<Realtime data={data} />} />
+              <Route path="historical" element={<Historical />} />
+              {/* Redirect everything else to /realtime */}
+              <Route path="/*" element={<Navigate to="/realtime" replace />} />
+            </Routes>
           </main>
         </div>
       )}
