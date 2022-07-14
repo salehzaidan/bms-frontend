@@ -56,7 +56,7 @@ function BatteryCell({ value }: BatteryCellProps) {
 
         {/* Cell ID */}
         <div className="absolute -left-2 -top-2 grid h-5 w-5 cursor-default select-none place-items-center rounded-md bg-teal-600 text-xs leading-none text-white">
-          {value.cell_id}
+          {value.modul}
         </div>
 
         {/* Battery cap */}

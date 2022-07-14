@@ -14,20 +14,22 @@ function Realtime({ data }: RealtimeProps) {
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <Card title="Battery Status">
         <BatteryGauge value={data.general[0].avg_soc} />
-        <DataItem
-          className="row-start-2"
-          label="Total Voltage"
-          variable={Variable.VOLTAGE}
-          value={data.general[0].total_voltage}
-          variant="horizontal"
-        />
-        <DataItem
-          className="row-start-2"
-          label="Total Current"
-          variable={Variable.CURRENT}
-          value={data.current}
-          variant="horizontal"
-        />
+        <div>
+          <DataItem
+            className="row-start-2"
+            label="Total Voltage"
+            variable={Variable.VOLTAGE}
+            value={data.general[0].total_voltage}
+            variant="horizontal"
+          />
+          <DataItem
+            className="row-start-2"
+            label="Total Current"
+            variable={Variable.CURRENT}
+            value={data.current}
+            variant="horizontal"
+          />
+        </div>
       </Card>
       <div className="grid grid-rows-3 gap-6 sm:grid-cols-3 sm:grid-rows-none">
         <DataInfo
@@ -51,8 +53,8 @@ function Realtime({ data }: RealtimeProps) {
       </div>
       <Card title="Cell Status" className="lg:col-span-2">
         <div className="grid grid-cols-2 justify-items-center gap-8 sm:grid-cols-4 lg:grid-cols-5">
-          {data.value.map(item => (
-            <BatteryCell key={item.cell_id} value={item} />
+          {data.value.map((item, idx) => (
+            <BatteryCell key={idx} value={item} />
           ))}
         </div>
       </Card>

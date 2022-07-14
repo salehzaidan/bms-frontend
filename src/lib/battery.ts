@@ -1,5 +1,5 @@
 export interface Value {
-  cell_id: number;
+  modul: number;
   voltage: number;
   temperature: number;
   soc: number;
