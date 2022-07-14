@@ -21,6 +21,8 @@ export interface General {
 export interface Data {
   value: Value[];
   general: General[];
+  current: number;
+  timestamp: string;
 }
 
 export class Variable {
@@ -36,6 +38,7 @@ export class Variable {
     false,
     'fluent:temperature-20-filled'
   );
+  static readonly CURRENT = new Variable('Current', 'A', true, '');
   static readonly SOC = new Variable('SoC', '%', false, 'ic:baseline-percent');
 
   private constructor(

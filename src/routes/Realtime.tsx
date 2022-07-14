@@ -21,6 +21,13 @@ function Realtime({ data }: RealtimeProps) {
           value={data.general[0].total_voltage}
           variant="horizontal"
         />
+        <DataItem
+          className="row-start-2"
+          label="Total Current"
+          variable={Variable.CURRENT}
+          value={data.current}
+          variant="horizontal"
+        />
       </Card>
       <div className="grid grid-rows-3 gap-6 sm:grid-cols-3 sm:grid-rows-none">
         <DataInfo
