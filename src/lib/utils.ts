@@ -1,5 +1,6 @@
 import React from 'react';
 import { Data } from './battery';
+import { ModuleData } from './module';
 
 export interface Props {
   className?: string;
@@ -20,4 +21,11 @@ export async function fetchRealtime() {
     `${process.env.REACT_APP_DATA_PROVIDER}/realtime`
   );
   return (await response.json()) as Data;
+}
+
+export async function fetchHistorical(module: number) {
+  const response = await fetch(
+    `${process.env.REACT_APP_DATA_PROVIDER}/historical?modul=${module}`
+  );
+  return (await response.json()) as ModuleData;
 }
