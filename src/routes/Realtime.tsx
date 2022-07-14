@@ -11,7 +11,7 @@ interface RealtimeProps {
 
 function Realtime({ data }: RealtimeProps) {
   return (
-    <div className="mx-auto grid max-w-screen-sm grid-cols-1 gap-6 lg:max-w-screen-lg lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <Card title="Battery Status">
         <BatteryGauge value={data.general[0].avg_soc} />
         <DataItem

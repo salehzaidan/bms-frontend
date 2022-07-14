@@ -1,4 +1,5 @@
 import '@fontsource/inter/variable.css';
+import Tab from 'components/Tab';
 import useInterval from 'hooks/useInterval';
 import { Data } from 'lib/battery';
 // import { randomizeData } from 'lib/utils';
@@ -26,10 +27,13 @@ function App() {
   return (
     <AppCtx.Provider value={data}>
       <div className="min-h-screen bg-gray-50 text-gray-900">
-        <header className="bg-teal-100 p-4">
-          <h1 className="text-center text-2xl">Battery Management System</h1>
+        <header>
+          <h1 className="mb-4 bg-teal-100 p-4 text-center text-2xl">
+            Battery Management System
+          </h1>
         </header>
-        <main className="py-8 px-4 lg:p-16">
+        <main className="mx-auto max-w-screen-sm space-y-4 px-4 lg:max-w-screen-lg">
+          <Tab />
           <Realtime data={data} />
         </main>
       </div>
