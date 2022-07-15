@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import React from 'react';
 import { Data } from './battery';
 import { ModuleData } from './module';
@@ -28,4 +29,8 @@ export async function fetchHistorical(module: number) {
     `${process.env.REACT_APP_DATA_PROVIDER}/historical?modul=${module}`
   );
   return (await response.json()) as ModuleData;
+}
+
+export function timestampFormatter(timestamp: number) {
+  return format(timestamp, 'HH:mm');
 }

@@ -4,12 +4,14 @@ import { fetchHistorical } from 'lib/utils';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
-const moduleList = [1, 2, 3, 4];
+const moduleList = Array.from({ length: 20 }, (_, k) => k + 1);
 
 function Historical() {
   const [module, setModule] = useState(1);
-  const { data } = useQuery<ModuleData, Error>(['historical', module], () =>
-    fetchHistorical(module)
+  const { data } = useQuery<ModuleData, Error>(
+    ['historical', module],
+    () => fetchHistorical(module),
+    { refetchInterval: 60000 }
   );
 
   return (
@@ -28,11 +30,27 @@ function Historical() {
         ))}
       </select>
       {data && (
-        <div className="mt-4 grid grid-cols-2 gap-4">
-          <Chart data={data.chart_voltage} domain={[0, 5]} tickCount={6} />
-          <Chart data={data.chart_temperature} domain={[0, 100]} />
-          <Chart data={data.chart_soc} domain={[0, 100]} />
-          <Chart data={data.chart_current} domain={[0, 100]} />
+        <div className="grid grid-cols-2 gap-4 py-8">
+          <Chart
+            data={data.chart_voltage}
+            label="Voltage"
+            unit="V"
+            domain={[0, 5]}
+            tickCount={6}
+          />
+          <Chart
+            data={data.chart_temperature}
+            label="Temperature"
+            unit="&deg;C"
+            domain={[0, 100]}
+          />
+          <Chart data={data.chart_soc} label="SoC" unit="%" domain={[0, 100]} />
+          <Chart
+            data={data.chart_current}
+            label="Current"
+            unit="A"
+            domain={[0, 100]}
+          />
         </div>
       )}
     </div>
