@@ -11,7 +11,10 @@ function Historical() {
   const { data } = useQuery<ModuleData, Error>(
     ['historical', module],
     () => fetchHistorical(module),
-    { refetchInterval: 60000 }
+    {
+      refetchInterval:
+        Number(process.env.REACT_APP_HISTORICAL_FETCH_INTERVAL) * 1000,
+    }
   );
 
   return (
