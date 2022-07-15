@@ -1,16 +1,30 @@
+import { TimestampContext } from 'App';
 import BatteryCell from 'components/BatteryCell';
 import BatteryGauge from 'components/BatteryGauge';
 import Card from 'components/Card';
 import DataInfo from 'components/DataInfo';
 import DataItem from 'components/DataItem';
 import { Data, Variable } from 'lib/battery';
+import { fetchRealtime } from 'lib/utils';
+import { useContext, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
-interface RealtimeProps {
-  data: Data;
-}
+function Realtime() {
+  const { data } = useQuery<Data, Error>('realtime', fetchRealtime, {
+    refetchInterval:
+      Number(process.env.REACT_APP_REALTIME_FETCH_INTERVAL) * 1000,
+  });
+  const { setTimestamp } = useContext(TimestampContext);
 
-function Realtime({ data }: RealtimeProps) {
-  return (
+  useEffect(() => {
+    if (data) {
+      setTimestamp(data.timestamp);
+    }
+  }, [data, setTimestamp]);
+
+  return !data ? (
+    <p>Loading...</p>
+  ) : (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <Card title="Battery Status">
         <BatteryGauge value={data.general[0].avg_soc} />

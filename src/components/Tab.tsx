@@ -1,10 +1,9 @@
+import { TimestampContext } from 'App';
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
-interface TabProps {
-  timestamp: string;
-}
-
-function Tab({ timestamp }: TabProps) {
+function Tab() {
+  const { timestamp } = useContext(TimestampContext);
   return (
     <div className="mx-auto flex items-center gap-4">
       <NavLink
@@ -27,9 +26,11 @@ function Tab({ timestamp }: TabProps) {
       >
         Historical
       </NavLink>
-      <div className="ml-auto rounded-md bg-teal-100 px-4 py-2 font-medium shadow">
-        {timestamp}
-      </div>
+      {timestamp && (
+        <div className="ml-auto rounded-md bg-teal-100 px-4 py-2 font-medium shadow">
+          {timestamp}
+        </div>
+      )}
     </div>
   );
 }
